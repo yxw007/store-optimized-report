@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>H5性能优化结果</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
+    <style>
+        .tips {
+            color: #00FF00;
+        }
+
+        #main {
+            margin-top: 30px;
+        }
+
+        .result div span {
+            color: #ff0000;
+            font-size: 30px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="./index.html">点击：查看打包后资源大小对比</a>
+    <br>
+    <span class="tips">统计方式：每种模式分别测试10次，然后取平均值</span>
+    <br>
+    <div id="main"
+         style="width: 100%;height:800px;"></div>
+    <div class="result">
+        <h1>测试结果</h1>
+
+        <h2>chrome-首屏显示页面</h2>
+        <div>启屋商城 VS 快绘商城 [速度提升]：<span>145%</span></div>
+        <div>启屋商城-优化版 VS 启屋商城 [速度提升]：<span>56%</span> </div>
+        <div>启屋商城-优化版 VS 快绘商城 [速度提升]: <span>300%</span></div>
+
+        <h2>chrome-首屏页面加载完成</h2>
+        <div>启屋商城 VS 快绘商城 [速度提升]: <span>155%</span></div>
+        <div>启屋商城-优化版 VS 启屋商城 [速度提升]：<span>20%</span></div>
+        <div>启屋商城-优化版 VS 快绘商城 [速度提升]: <span>208%</span></div>
+
+        <h2>APP(IE内核)-首屏页面显示</h2>
+        <div>启屋商城 VS 快绘商城 [速度提升]: <span>159%</span></div>
+        <div>启屋商城-优化版 VS 启屋商城 [速度提升]：<span>138%</span></div>
+        <div>启屋商城-优化版 VS 快绘商城 [速度提升]: <span>517%</span></div>
+
+        <h2>APP(IE内核)-首屏页面加载完成</h2>
+        <div>启屋商城 VS 快绘商城 [速度提升]: <span>126%</span></div>
+        <div>启屋商城-优化版 VS 启屋商城 [速度提升]：<span>202%</span></div>
+        <div>启屋商城-优化版 VS 快绘商城 [速度提升]: <span>584%</span></div>
+    </div>
+    <script type="text/javascript">
+        var chartDom = document.getElementById('main');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        option = {
+            title: {
+                text: '每次清缓存 - 交叉测试 - 加载速度对比(单位: 秒)'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            color: ["#ff0000", "#4cabce", "#FFC914"],
+            legend: {},
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                boundaryGap: [0, 0.01],
+                interval: 10,
+            },
+            yAxis: {
+                type: 'category',
+                data: ['chrome-首屏显示页面所需时间', 'chrome-首屏页面加载完成', 'APP(IE内核) - 首屏显示页面所需时间', 'APP(IE内核) - 首屏页面加载完成']
+            },
+            series: [{
+                    name: '快绘商城',
+                    type: 'bar',
+                    data: [4.119, 7.28, 8.348, 9.451]
+                },
+                {
+                    name: '启屋商城',
+                    type: 'bar',
+                    data: [1.608, 2.85, 3.225, 4.173, 3.225, 4.173]
+                },
+                {
+                    name: '启屋商城-优化版',
+                    type: 'bar',
+                    data: [1.02988, 2.363, 1.356, 1.381]
+                }
+            ]
+        };
+
+        option && myChart.setOption(option);
+    </script>
+    <!-- <script>
+        var domLoadConsuming = 0;
+        function onDomLoaded() {
+            console.log('DOM fully loaded and parsed');
+
+            domLoadConsuming = (performance.now() / 1000).toFixed(2);
+            console.log("dom-load seconds time: " + domLoadConsuming + "s");
+        }
+        window.addEventListener('DOMContentLoaded', onDomLoaded);
+
+        function onPageLoaded() {
+            console.log('page is fully loaded');
+
+            const pageLoadConsuming = (performance.now() / 1000).toFixed(2);
+            alert("dom加载时间: " + domLoadConsuming + "s\n" + "页面加载时间: " + pageLoadConsuming + "s");
+        }
+        window.addEventListener('load', onPageLoaded);
+    </script> -->
+</body>
+
+</html>

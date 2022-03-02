@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>H5性能优化结果</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
+    <style>
+        .result div span {
+            color: #ff0000;
+            font-size: 30px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="./speed.html">点击：查看加载速度对比</a>
+    <br>
+
+    <div id="main"
+         style="width: 100%;height:800px;"></div>
+
+    <div class="result">
+        <h1>测试结果</h1>
+        <h2>打包后的资源体积</h2>
+        <div>启屋商城 VS 快绘商城 [体积缩小]：<span>45%</span></div>
+        <div>启屋商城-优化版 VS 启屋商城 [体积缩小]：<span>59%</span> </div>
+        <div>启屋商城-优化版 VS 快绘商城 [体积缩小]: <span>131%</span></div>
+    </div>
+
+    <script type="text/javascript">
+        var chartDom = document.getElementById('main');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        option = {
+            title: {
+                text: '打包后的资源体积'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    dataView: {
+                        show: true,
+                        readOnly: false
+                    },
+                    magicType: {
+                        show: true,
+                        type: ['line', 'bar']
+                    },
+                    restore: {
+                        show: true
+                    },
+                    saveAsImage: {
+                        show: true
+                    }
+                }
+            },
+            color: ["#ff0000", "#4cabce", "#FFC914"],
+            legend: {
+                data: ["快绘商城", "启屋商城", "启屋商城-优化版"]
+            },
+            xAxis: [{
+                type: 'category',
+                data: ['Image', 'CSS', 'JavaScript', 'Fonts', 'Html', 'Total'],
+                axisPointer: {
+                    type: 'shadow'
+                }
+            }],
+            yAxis: [{
+                    type: 'value',
+                    name: 'size',
+                    min: 10,
+                    max: 15360,
+                    interval: 2048,
+                    axisLabel: {
+                        formatter: '{value} kb'
+                    }
+                },
+                {
+                    type: 'value',
+                    name: 'size',
+                    min: 0,
+                    max: 15360,
+                    interval: 1024,
+                    axisLabel: {
+                        formatter: '{value} kb'
+                    }
+                }
+            ],
+            series: [{
+                    name: '快绘商城',
+                    type: 'bar',
+                    tooltip: {
+                        valueFormatter: function (value) {
+                            if (value > 1024) {
+                                return (value / 1024).toFixed(2) + 'MB';
+                            }
+                            return value + ' KB';
+                        }
+                    },
+                    data: [6942, 1259, 4689, 206, 29.7, 13107]
+                },
+                {
+                    name: '启屋商城',
+                    type: 'bar',
+                    tooltip: {
+                        valueFormatter: function (value) {
+                            if (value > 1024) {
+                                return (value / 1024).toFixed(2) + 'MB';
+                            }
+                            return value + ' KB';
+                        }
+                    },
+                    data: [3246, 1249, 4280, 205, 12.8, 9000]
+                },
+                {
+                    name: '启屋商城-优化版',
+                    type: 'bar',
+                    tooltip: {
+                        valueFormatter: function (value) {
+                            if (value > 1024) {
+                                return (value / 1024).toFixed(2) + 'MB';
+                            }
+                            return value + ' KB';
+                        }
+                    },
+                    data: [2211, 958, 2244, 126, 13.5, 5652]
+                }
+            ]
+        };
+
+        option && myChart.setOption(option);
+    </script>
+</body>
+
+</html>
